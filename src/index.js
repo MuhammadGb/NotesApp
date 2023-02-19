@@ -1,5 +1,5 @@
 const express = require("express");
-require("dotenv").config(); // loads the environment variables into process.env
+require("dotenv").config();
 const path = require("path");
 const cors = require("cors");
 
@@ -34,6 +34,24 @@ app.get("/", (req, res) => {
   res.redirect("/api/v1/notes");
 });
 
+// Mongoose Connection
+mongoose.Promise = global.Promise;
+const { MONGO_URI } = process.env;
+const URL = MONGO_URI || localUrl;
+
+mongoose
+  .connect(URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Successfully connected to the database");
+  })
+  .catch((err) => {
+    console.log("Could not connect to the database. Exiting now...", err);
+    process.exit();
+  });
+
 app.use("/api/v1/notes", notesRouter);
 app.use("/api/v1/users", usersRouter);
 
@@ -41,43 +59,6 @@ app.use(handleError);
 
 const port = process.env.PORT || 8080;
 
-// app.listen(port, () => {
-//   console.log(`Server is listening on port ${port}.`);
-// });
-
-// mongoose
-//   .connect(URL, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => {
-//     console.log("Successfully connected to the database");
-//   })
-//   .catch((err) => {
-//     console.log("Could not connect to the database. Exiting now...", err);
-//     process.exit();
-//   });
-
-// Mongoose Connection
-mongoose.Promise = global.Promise;
-const { MONGO_URI } = process.env;
-const URL = MONGO_URI || localUrl;
-
-// Connecting to the database
-mongoose
-  .connect(
-    "mongodb+srv://Qatadah:qatadah@cluster0.d60cebk.mongodb.net/?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    },
-  )
-  .then((result) => {
-    app.listen(port, () => {
-      console.log(`Server is listening on port ${port}.`);
-    });
-  })
-  .catch((err) => {
-    console.log("Could not connect to the database. Exiting now...", err);
-    process.exit();
-  });
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}.`);
+});
