@@ -8,7 +8,7 @@ const { JWT_SECRET } = process.env;
 const strategy = new Strategy(
   {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: JWT_SECRET,
+    secretOrKey: JWT_SECRET || "secret_key",
   },
   async (jwtPayload, done) => {
     try {
