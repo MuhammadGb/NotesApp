@@ -30,7 +30,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(auth.initialize());
 
-//Redirect the base URL / to /api/v1/recipes#
 app.get("/", (req, res) => {
   res.redirect("/api/v1/notes");
 });
