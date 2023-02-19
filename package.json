@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js --ignore ./db",
+    "start": "node src/index.js --ignore ./db",
+    "dev": "nodemon src/index.js --ignore ./db",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
