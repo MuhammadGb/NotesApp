@@ -8,13 +8,11 @@ const usersRouter = require("./routers/users");
 const { handleError } = require("./utils/error");
 const auth = require("./middleware/auth.js");
 
-// Configuring the database
 const mongoose = require("mongoose");
 const localUrl = "mongodb://localhost:27017/simple-notes";
 
 const app = express();
 
-//Enable cors
 app.use(cors());
 
 app.use((req, res, next) => {
